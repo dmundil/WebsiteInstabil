@@ -1,0 +1,13 @@
+{
+  "name": "websiteinstabil",
+  "version": "1.0.0",
+  "description": "Dynamic CRM demo with unstable selectors and synonym headings",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["crm", "demo", "dynamic"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}
