@@ -1,5 +1,4 @@
 const elements = {
-  docTitle: document.querySelector('[data-role="doc-title"]'),
   title: document.querySelector('[data-role="page-title"]'),
   subtitle: document.querySelector('[data-role="page-subtitle"]'),
   pipelineTitle: document.querySelector('[data-role="pipeline-title"]'),
@@ -45,17 +44,14 @@ function randomToken(prefix) {
 }
 
 function applySynonyms() {
-  const nextTitle = sample(synonymPool.title);
-  elements.title.textContent = nextTitle;
-  elements.docTitle && (elements.docTitle.textContent = `${nextTitle} | Selektoren Roulette`);
-  document.title = `${nextTitle} | Selektoren Roulette`;
-  elements.subtitle && (elements.subtitle.textContent = sample(synonymPool.subtitle));
-  elements.pipelineTitle && (elements.pipelineTitle.textContent = sample(synonymPool.pipelineTitle));
-  elements.pipelineSubtitle && (elements.pipelineSubtitle.textContent = sample(synonymPool.pipelineSubtitle));
-  elements.formTitle && (elements.formTitle.textContent = sample(synonymPool.formTitle));
-  elements.formSubtitle && (elements.formSubtitle.textContent = sample(synonymPool.formSubtitle));
-  elements.contactsTitle && (elements.contactsTitle.textContent = sample(synonymPool.contactsTitle));
-  elements.contactsSubtitle && (elements.contactsSubtitle.textContent = sample(synonymPool.contactsSubtitle));
+  elements.title.textContent = sample(synonymPool.title);
+  elements.subtitle.textContent = sample(synonymPool.subtitle);
+  elements.pipelineTitle.textContent = sample(synonymPool.pipelineTitle);
+  elements.pipelineSubtitle.textContent = sample(synonymPool.pipelineSubtitle);
+  elements.formTitle.textContent = sample(synonymPool.formTitle);
+  elements.formSubtitle.textContent = sample(synonymPool.formSubtitle);
+  elements.contactsTitle.textContent = sample(synonymPool.contactsTitle);
+  elements.contactsSubtitle.textContent = sample(synonymPool.contactsSubtitle);
 }
 
 function applyDynamicSelector(node, label) {
@@ -70,7 +66,7 @@ function applyDynamicSelector(node, label) {
   node.id = id;
   node.dataset.selector = dataSelector;
   node.dataset.dynamicClass = cssClass;
-  node.className = cssClass;
+  node.classList.add(cssClass);
 
   return { label, id: `#${id}`, className: `.${cssClass}`, dataSelector: `[data-selector="${dataSelector}"]` };
 }
@@ -81,25 +77,31 @@ function buildSelectorMap(entries) {
   entries.forEach(entry => {
     if (!entry) return;
     const pill = document.createElement('div');
-    pill.dataset.role = 'selector-pill';
+    pill.className = 'selector-pill';
     pill.innerHTML = `<strong>${entry.label}</strong> ${entry.id} | ${entry.className} | ${entry.dataSelector}`;
     elements.selectorMap.appendChild(pill);
   });
 }
 
 function randomizeSelectors() {
-  const scopedEntries = Array.from(document.querySelectorAll('[data-role]')).map(node => {
-    const label = node.dataset.role || node.tagName.toLowerCase();
-    return applyDynamicSelector(node, label);
-  });
-  buildSelectorMap(scopedEntries);
+  const entries = [
+    applyDynamicSelector(elements.hero, 'hero'),
+    applyDynamicSelector(elements.title, 'title'),
+    applyDynamicSelector(elements.subtitle, 'subtitle'),
+    applyDynamicSelector(elements.pipelineList, 'pipeline-list'),
+    applyDynamicSelector(elements.addForm, 'form'),
+    applyDynamicSelector(elements.contactList, 'contact-list'),
+    applyDynamicSelector(elements.formPanel, 'form-panel'),
+    applyDynamicSelector(elements.contactsPanel, 'contacts-panel'),
+    applyDynamicSelector(elements.selectorHint, 'selector-hint')
+  ];
+  buildSelectorMap(entries);
 }
 
 async function fetchContacts() {
   const res = await fetch('/api/contacts');
   const payload = await res.json();
   renderContacts(payload.contacts || []);
-  randomizeSelectors();
 }
 
 function renderContacts(list) {
@@ -107,13 +109,13 @@ function renderContacts(list) {
   elements.contactList.innerHTML = '';
   list.forEach(contact => {
     const card = document.createElement('article');
-    card.dataset.role = 'contact-card';
+    card.className = 'contact-card';
     applyDynamicSelector(card, `contact-${contact.id}`);
 
     const name = document.createElement('h3');
     name.textContent = contact.name;
     const email = document.createElement('p');
-    email.dataset.role = 'contact-email';
+    email.className = 'muted';
     email.textContent = contact.email;
     const company = document.createElement('p');
     company.textContent = contact.company || 'Unbekannt';
@@ -121,7 +123,7 @@ function renderContacts(list) {
     const tags = document.createElement('div');
     (contact.tags || []).forEach(tag => {
       const pill = document.createElement('span');
-      pill.dataset.role = 'tag';
+      pill.className = 'tag';
       pill.textContent = tag;
       tags.appendChild(pill);
     });
