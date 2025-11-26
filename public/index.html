@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamisches CRM Sandbox</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="page-header" data-role="hero">
+    <p class="badge">Selektoren wechseln bei jedem Reload</p>
+    <h1 data-role="page-title">CRM Sandbox</h1>
+    <p class="subtitle" data-role="page-subtitle">Eine instabile Oberfläche zum Testen von Automatisierungen</p>
+  </header>
+
+  <main class="grid">
+    <section class="panel" data-role="pipeline">
+      <div class="panel-header">
+        <h2 data-role="pipeline-title">Sales Pipeline</h2>
+        <p class="muted" data-role="pipeline-subtitle">Synonyme wechseln ständig, Selektoren auch.</p>
+      </div>
+      <ul class="pipeline-list" data-role="pipeline-list">
+        <li>🧭 Lead Intake</li>
+        <li>🤝 Qualifizierung</li>
+        <li>🧪 Lösungsvorschlag</li>
+        <li>📝 Angebot &amp; Negotiation</li>
+        <li>🎉 Gewinn/Verlust</li>
+      </ul>
+    </section>
+
+    <section class="panel" data-role="form-panel">
+      <div class="panel-header">
+        <h2 data-role="form-title">Kontakt hinzufügen</h2>
+        <p class="muted" data-role="form-subtitle">Selektoren und Überschriften verändern sich.</p>
+      </div>
+      <form class="stack" data-role="add-form">
+        <label class="field">
+          <span>Vollständiger Name</span>
+          <input type="text" name="name" required placeholder="z.B. Hannah CRM" data-role="input-name" />
+        </label>
+        <label class="field">
+          <span>E-Mail</span>
+          <input type="email" name="email" required placeholder="kontakt@example.com" data-role="input-email" />
+        </label>
+        <label class="field">
+          <span>Firma</span>
+          <input type="text" name="company" placeholder="Firma" data-role="input-company" />
+        </label>
+        <label class="field">
+          <span>Stichworte (kommagetrennt)</span>
+          <input type="text" name="tags" placeholder="Pilot, Renewal" data-role="input-tags" />
+        </label>
+        <button type="submit" class="primary" data-role="submit-button">Speichern</button>
+      </form>
+    </section>
+
+    <section class="panel" data-role="contacts-panel">
+      <div class="panel-header">
+        <h2 data-role="contacts-title">Kontakte</h2>
+        <p class="muted" data-role="contacts-subtitle">Automatisches Refresh mit zufälligen Selektoren.</p>
+      </div>
+      <div class="info-strip" data-role="selector-hint">
+        <div>
+          <p class="muted">Zufällige Selektoren</p>
+          <div class="selector-map" data-role="selector-map"></div>
+        </div>
+        <button type="button" class="ghost" data-role="reshuffle">Selektoren neu mischen</button>
+      </div>
+      <div class="contact-list" data-role="contact-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer" data-role="footer">
+    <p>Dieser Sandbox-CRM ändert Klassen/IDs bei jedem Reload &amp; Button-Klick.</p>
+    <p class="muted">Nutze die Anzeige oben, um die aktuellen Selektoren zu beobachten.</p>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>
